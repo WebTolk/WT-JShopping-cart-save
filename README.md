@@ -1,5 +1,5 @@
 # WT JShopping cart save
-The plugin saves products placed by the registered user in the cart, but not placed in the order, as well as a wish list. JoomShopping 5.3+
+The plugin saves products placed by the registered user in the cart, but not placed in the order, as well as a wish list. JoomShopping 5.3.2+
 
 There are often cases when customers on the site put an item in the cart, but do not complete the order. Or they add products to the wish list, but forget about them.This plugin saves the abandoned baskets of registered users in the database and displays information to the site administrators in the list of users about which of the users has items forgotten in the basket.
 

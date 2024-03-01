@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * @package       WT JShopping cart save
+ * @version       1.0.1
+ * @Author        Sergey Tolkachyov, https://web-tolk.ru
+ * @сopyright (c) 2024 - March 2024 Sergey Tolkachyov. All rights reserved.
+ * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
+ * @since         1.0.0
+ */
 namespace Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Extension;
 
 // No direct access
@@ -60,7 +67,7 @@ class Wtjshoppingcartsave extends CMSPlugin implements SubscriberInterface
 		$cart = $event->getArgument(0);
 
 		$tempcart    = \JSFactory::getModel('Tempcart', 'Site');
-		$tempcart_id = (string) $tempcart->getIdTempCart();
+		$tempcart_id = (string) $tempcart->getIdTempCart($cart->type_cart);
 		$this->deleteTempCartDate($tempcart_id);
 
 		if (count($cart->products) == 0)
