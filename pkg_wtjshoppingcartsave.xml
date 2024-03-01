@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" method="upgrade">
+	<name>WT Jshopping Cart save package</name>
+	<author>Sergey Tolkachyov</author>
+	<creationDate>January 2024</creationDate>
+	<packagename>wtjshoppingcartsave</packagename>
+	<version>1.0.0</version>
+	<url>https://web-tolk.ru</url>
+	<packager>Sergey Tolkachyov</packager>
+	<packagerurl>https://web-tolk.ru/dev/joomla-plugins/wt-jshopping-cart-save</packagerurl>
+	<description>Save products placed by the registered user in the cart, but not ordered, as well as a wish list. JoomShopping 5.3+</description>
+	<license>GNU GPL 3.0</license>
+	<scriptfile>script.php</scriptfile>
+	<languages>
+		<language tag="ru-RU">language/ru-RU/pkg_wtjshoppingcartsave.sys.ini</language>
+		<language tag="en-GB">language/ru-RU/pkg_wtjshoppingcartsave.sys.ini</language>
+	</languages>
+	<files>
+	   <folder type="plugin" method="upgrade" id="wtjshoppingcartsave" group="jshopping">plg_jshopping_wtjshoppingcartsave</folder>
+	</files>
+	<updateservers>
+      <server type="extension" priority="1" name="WT JShopping cart save updates">https://web-tolk.ru/component/swjprojects/jupdate?element=wtjshoppingcartsave</server>
+	</updateservers>
+	<changelogurl>https://web-tolk.ru/jchangelog?element=wtjshoppingcartsave</changelogurl>
+</extension>

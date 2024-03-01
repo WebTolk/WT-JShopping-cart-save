@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="plugin" method="upgrade" group="jshopping">
+    <name>Jshopping - WT JShopping cart save</name>
+    <author>Sergey Tolkachyov</author>
+	<creationDate>January 2024</creationDate>
+    <copyright>(c) 2024 Sergey Tolkachyov</copyright>
+    <license>GNU General Public License version 3 or later</license>
+	<authorEmail>info@web-tolk.ru</authorEmail>
+	<authorUrl>https://web-tolk.ru/</authorUrl>
+    <version>1.0.0</version>
+    <description>PLG_WTJSHOPPINGCARTSAVE_DESC</description>
+	<namespace path="src">Joomla\Plugin\Jshopping\Wtjshoppingcartsave</namespace>
+    <files>
+		<folder plugin="wtjshoppingcartsave">src</folder>
+		<folder>services</folder>
+		<folder>language</folder>
+		<folder>sql</folder>
+		<folder>tmpl</folder>
+    </files>
+	<languages folder="language" client="administrator">
+		<language tag="en-GB">en-GB/plg_jshopping_wtjshoppingcartsave.ini</language>
+		<language tag="ru-RU">ru-RU/plg_jshopping_wtjshoppingcartsave.ini</language>
+		<language tag="en-GB">en-GB/plg_jshopping_wtjshoppingcartsave.sys.ini</language>
+		<language tag="ru-RU">ru-RU/plg_jshopping_wtjshoppingcartsave.sys.ini</language>
+	</languages>
+	 <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+				<field name="plugininfo"
+					   type="plugininfo"
+					   addfieldprefix="Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields"
+				/>
+				<field type="radio"
+					   name="use_joomla_auth_cookie_plugin_lifetime_setting"
+					   label="PLG_WTJSHOPPINGCARTSAVE_USE_JOOMLA_AUTH_COOKIE_PLUGIN_LIFETIME_SETTINGS"
+					   description="PLG_WTJSHOPPINGCARTSAVE_USE_JOOMLA_AUTH_COOKIE_PLUGIN_LIFETIME_SETTINGS_DESC"
+					   class="btn-group"
+					   default="0">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field type="joomlaauthenticationcookiestatus"
+					   addfieldprefix="Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields"
+					   name="joomlaauthenticationcookiestatus"
+					   showon="use_joomla_auth_cookie_plugin_lifetime_setting:1"/>
+				<field type="number"
+					   name="cookie_lifetime"
+					   label="PLG_WTJSHOPPINGCARTSAVE_COOKIE_LIFETIME"
+					   min="1"
+					   default="365"
+					   showon="use_joomla_auth_cookie_plugin_lifetime_setting:0"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
