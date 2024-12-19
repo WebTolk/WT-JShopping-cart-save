@@ -1,9 +1,9 @@
 <?php
 /**
- * @package       WT JShopping cart save
- * @version       1.0.1
+ * @package    WT JShopping cart save
+ * @version       1.1.0
  * @Author        Sergey Tolkachyov, https://web-tolk.ru
- * @сopyright (c) 2024 - March 2024 Sergey Tolkachyov. All rights reserved.
+ * @сopyright  Copyright (c) 2024 Sergey Tolkachyov. All rights reserved.
  * @license       GNU/GPL3 http://www.gnu.org/licenses/gpl-3.0.html
  * @since         1.0.0
  */
@@ -16,6 +16,7 @@ use Joomla\CMS\Helper\LibraryHelper;
 use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
 use Joomla\Database\DatabaseDriver;
 use Joomla\DI\Container;
 use Joomla\DI\ServiceProviderInterface;
@@ -50,7 +51,7 @@ return new class () implements ServiceProviderInterface {
 			 *
 			 * @since  1.0.0
 			 */
-			protected string $minimumJoomla = '4.0';
+			protected string $minimumJoomla = '4.1.0';
 
 			/**
 			 * Minimum PHP version required to install the extension.
@@ -77,7 +78,7 @@ return new class () implements ServiceProviderInterface {
 			/**
 			 * This method is called after a component is installed.
 			 *
-			 * @param   \stdClass  $installer  - Parent object calling this method.
+			 * @param   InstallerAdapter  $adapter  - Parent object calling this method.
 			 *
 			 * @return void
 			 */
@@ -131,7 +132,11 @@ return new class () implements ServiceProviderInterface {
 			 */
 			public function preflight(string $type, InstallerAdapter $adapter): bool
 			{
-
+				// Check compatible
+				if (!$this->checkCompatible($adapter->getElement()))
+				{
+					return false;
+				}
 				return true;
 
 			}
@@ -161,7 +166,7 @@ return new class () implements ServiceProviderInterface {
 				$element = strtoupper($adapter->getElement());
 				$type = strtoupper($type);
 				$html = '
-				<div class="row bg-white m-0">
+				<div class="row m-0">
 				<div class="col-12 col-md-8 p-0 pe-2">
 				<h2>'.$smile.' '.Text::_($element.'_AFTER_'.$type).' <br/>'.Text::_($element).'</h2>
 				'.Text::_($element.'_DESC');
@@ -195,7 +200,10 @@ return new class () implements ServiceProviderInterface {
 					<a class="btn btn-sm btn-outline-primary" href="https://web-tolk.ru" target="_blank"> https://web-tolk.ru</a>
 					<a class="btn btn-sm btn-outline-primary" href="mailto:info@web-tolk.ru"><i class="icon-envelope"></i> info@web-tolk.ru</a>
 				</p>
-				<p><a class="btn btn-danger w-100" href="https://t.me/joomlaru" target="_blank">' . Text::_($element . '_JOOMLARU_TELEGRAM_CHAT') . '</a></p>
+				<div class="btn-group-vertical mb-3 web-tolk-btn-links" role="group" aria-label="Joomla community links">
+					<a class="btn btn-danger text-white w-100" href="https://t.me/joomlaru" target="_blank">' . Text::_($element . '_JOOMLARU_TELEGRAM_CHAT') . '</a>
+					<a class="btn btn-primary text-white w-100" href="https://t.me/webtolkru" target="_blank">' . Text::_($element . '_WEBTOLK_TELEGRAM_CHANNEL') . '</a>
+				</div>
 				'.Text::_($element."_MAYBE_INTERESTING").'
 				</div>
 
@@ -223,6 +231,43 @@ return new class () implements ServiceProviderInterface {
 
 				// Update record
 				$this->db->updateObject('#__extensions', $plugin, ['type', 'element', 'folder']);
+			}
+
+			/**
+			 * Method to check compatible.
+			 *
+			 * @throws  Exception
+			 *
+			 * @return  boolean True on success, False on failure.
+			 *
+			 * @since  1.0.0
+			 */
+			protected function checkCompatible(string $element): bool
+			{
+				$element = strtoupper($element);
+				// Check joomla version
+				if (!(new Version)->isCompatible($this->minimumJoomla))
+				{
+					$this->app->enqueueMessage(
+						Text::sprintf($element.'_ERROR_COMPATIBLE_JOOMLA', $this->minimumJoomla),
+						'error'
+					);
+
+					return false;
+				}
+
+				// Check PHP
+				if (!(version_compare(PHP_VERSION, $this->minimumPhp) >= 0))
+				{
+					$this->app->enqueueMessage(
+						Text::sprintf($element.'_ERROR_COMPATIBLE_PHP', $this->minimumPhp),
+						'error'
+					);
+
+					return false;
+				}
+
+				return true;
 			}
 
 		});

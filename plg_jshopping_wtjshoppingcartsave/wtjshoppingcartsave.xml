@@ -52,6 +52,8 @@
 				<field type="joomlaauthenticationcookiestatus"
 					   addfieldprefix="Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields"
 					   name="joomlaauthenticationcookiestatus"
+					   label="PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_FIELD_LABEL"
+					   parentclass="alert alert-info"
 					   showon="use_joomla_auth_cookie_plugin_lifetime_setting:1"/>
 				<field type="number"
 					   name="cookie_lifetime"

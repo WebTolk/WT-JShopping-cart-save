@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+	<fields name="params">
+		<fieldset name="task_params">
+			<field type="savedcartscount"
+				   addfieldprefix="Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields"
+				   name="savedcartscount"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_SAVED_CARTS_COUNT"
+				   parentclass="alert alert-info"
+				   class="px-3"/>
+			<field type="list"
+				   name="lifetime_setting"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_LIFETIME_SETTING"
+				   default="wtjshoppingcartsave">
+				<option value="joomlaauthenticationcookie">PLG_WTJSHOPPINGCLEARSAVEDCARTS_LIFETIME_SETTING_JOOMLAAUTHENTICATIONCOOKIE</option>
+				<option value="wtjshoppingcartsave">PLG_WTJSHOPPINGCLEARSAVEDCARTS_LIFETIME_SETTING_WTJSHOPPINGCARTSAVE</option>
+				<option value="custom">PLG_WTJSHOPPINGCLEARSAVEDCARTS_LIFETIME_SETTING_CUSTOM</option>
+			</field>
+
+			<field type="joomlaauthenticationcookiestatus"
+				   addfieldprefix="Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields"
+				   name="joomlaauthenticationcookiestatus"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_JOOMLA_PLUGINS_STATUS_FIELD_LABEL"
+				   parentclass="alert alert-info"
+				   showon="lifetime_setting:joomlaauthenticationcookie"/>
+			<field type="wtjshoppingcartsavelifetimestatus"
+				   addfieldprefix="Joomla\Plugin\Task\Wtjshoppingclearsavedcarts\Fields"
+				   name="wtjshoppingcartsavelifetimestatus"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_WT_JSHOPPING_CART_SAVE_LIFETIME_STATUS_FIELD_LABEL"
+				   parentclass="alert alert-info"
+				   class="px-3"
+				   showon="lifetime_setting:wtjshoppingcartsave"/>
+
+			<field type="number"
+				   name="cookie_lifetime"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_COOKIE_LIFETIME"
+				   min="1"
+				   filter="integer"
+				   default="365"
+				   showon="lifetime_setting:custom"/>
+
+			<field type="radio"
+				   name="delete_registered_users_cart"
+				   label="PLG_WTJSHOPPINGCLEARSAVEDCARTS_DELETE_REGISTERED_USERS_CART"
+				   description="PLG_WTJSHOPPINGCLEARSAVEDCARTS_DELETE_REGISTERED_USERS_CART_DESC"
+				   layout="joomla.form.field.radio.switcher"
+				   default="0"
+				   filter="boolean">
+				<option value="0">JNO</option>
+				<option value="1">JYES</option>
+			</field>
+
+		</fieldset>
+	</fields>
+</form>

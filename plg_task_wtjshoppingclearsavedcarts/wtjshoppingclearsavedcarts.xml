@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="plugin" group="task" method="upgrade">
+    <name>PLG_WTJSHOPPINGCLEARSAVEDCARTS</name>
+    <author>Sergey Tolkachyov</author>
+    <creationDate>19.12.2024</creationDate>
+    <copyright>Copyright (c) 2024 Sergey Tolkachyov. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>info@web-tolk.ru</authorEmail>
+    <authorUrl>https://web-tolk.ru</authorUrl>
+    <version>1.1.0</version>
+    <description>PLG_WTJSHOPPINGCLEARSAVEDCARTS_DESC</description>
+    <namespace path="src">Joomla\Plugin\Task\Wtjshoppingclearsavedcarts</namespace>
+    <files>
+        <folder>forms</folder>
+        <folder>language</folder>
+        <folder>services</folder>
+        <folder plugin="wtjshoppingclearsavedcarts">src</folder>
+        <filename>wtjshoppingclearsavedcarts.xml</filename>
+    </files>
+    <languages folder="language" client="administrator">
+        <language tag="ru-RU">ru-RU/plg_task_wtjshoppingclearsavedcarts.ini</language>
+        <language tag="ru-RU">ru-RU/plg_task_wtjshoppingclearsavedcarts.sys.ini</language>
+        <language tag="en-GB">en-GB/plg_task_wtjshoppingclearsavedcarts.ini</language>
+        <language tag="en-GB">en-GB/plg_task_wtjshoppingclearsavedcarts.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+                <field name="plugininfo"
+                       type="plugininfo"
+                       addfieldprefix="Joomla\Plugin\Task\Wtjshoppingclearsavedcarts\Fields"
+                />
+            </fieldset>
+        </fields>
+    </config>
+</extension>

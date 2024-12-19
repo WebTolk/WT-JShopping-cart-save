@@ -13,12 +13,13 @@ namespace Joomla\Plugin\Jshopping\Wtjshoppingcartsave\Fields;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Field\NoteField;
+use Joomla\CMS\Form\FormField;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Plugin\PluginHelper;
 
-class JoomlaauthenticationcookiestatusField extends NoteField
+class JoomlaauthenticationcookiestatusField extends FormField
 {
 
     protected $type = 'Joomlaauthenticationcookiestatus';
@@ -33,65 +34,47 @@ class JoomlaauthenticationcookiestatusField extends NoteField
      */
     protected function getInput(): string
     {
-        return ' ';
+        Factory::getApplication()
+               ->getLanguage()
+               ->load('plg_jshopping_wtjshoppingcartsave', JPATH_ADMINISTRATOR,null, true);
+
+        $auth_cookie_plugin_state = false;
+        if (PluginHelper::isEnabled('authentication', 'cookie'))
+        {
+            $auth_cookie_plugin_state = true;
+        }
+        $message = Text::sprintf(
+            'PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_FIELD_AUTHENTICATION_COOKIE',
+            ($auth_cookie_plugin_state ? Text::_('PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_ENABLED') : Text::_(
+                'PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_DISABLED'
+            ))
+        );
+
+        if ($auth_cookie_plugin_state)
+        {
+            $auth_cookie_params = new Registry(PluginHelper::getPlugin('authentication', 'cookie')->params);
+            $cookie_lifetime    = $auth_cookie_params->get('cookie_lifetime', 60);
+            $message            .= Text::sprintf(
+                'PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_FIELD_SYSTEM_REMEMBER_COOKIE_LIFETIME',
+                $cookie_lifetime,
+                $cookie_lifetime
+            );
+        }
+
+
+        $system_remember_plugin_state = false;
+        if (PluginHelper::isEnabled('system', 'remember'))
+        {
+            $system_remember_plugin_state = true;
+        }
+
+        $message .= Text::sprintf(
+            'PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_FIELD_SYSTEM_REMEMBER',
+            ($system_remember_plugin_state ? Text::_('PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_ENABLED') : Text::_(
+                'PLG_WTJSHOPPINGCARTSAVE_JOOMLA_PLUGINS_STATUS_DISABLED'
+            ))
+        );
+
+        return $message;
     }
-
-    /**
-     * @return  string  The field label markup.
-     *
-     * @since   1.7.0
-     */
-    protected function getLabel(): string
-    {
-		if(!PluginHelper::isEnabled('authentication','cookie')){
-			$message = '<p>Plugin Authentication - Cookie is not enabled</p>';
-			return $this->renderMessage($message,'warning');
-		}
-
-		$message = '<p>Plugin <code>Authentication - Cookie</code> is enabled.</p>';
-
-		if(!PluginHelper::isEnabled('system','remember')){
-			$message .= '<p>Plugin System - Remember is not enabled</p>';
-			return $this->renderMessage($message,'warning');
-		}
-		$auth_cookie_params = new Registry(PluginHelper::getPlugin('authentication','cookie')->params);
-		$cookie_lifetime = $auth_cookie_params->get('cookie_lifetime','60');
-		$message .= '<p>Cookie lifetime param is <span class="badge bg-success">'.$cookie_lifetime.'</span> days. User\'s cart will save for <span class="badge bg-success">'.$cookie_lifetime.'</span> days.</p>
-		<hr>
-		<p>Plugin <code>System - Remember</code> is enabled.</p>';
-	    return $this->renderMessage($message,'success');
-
-    }
-
-    /**
-     * Method to get the field title.
-     *
-     * @return  string  The field title.
-     *
-     * @since   1.7.0
-     */
-    protected function getTitle(): string
-    {
-        return $this->getLabel();
-    }
-
-	/**
-	 * @param   string  $message
-	 * @param   string  $type 'success', 'danger', 'info' etc. 'info' by default
-	 *
-	 * @return string
-	 *
-	 * @since 1.0.0
-	 */
-	private function renderMessage(string $message, string $type = 'info') : string
-	{
-		$class = 'alert-'.$type;
-
-		return '</div>
-		<div class="alert '.$class.'">
-			'.$message.'
-		</div><div>
-		';
-	}
 }
-?>
